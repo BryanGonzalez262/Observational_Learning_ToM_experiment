@@ -6,18 +6,18 @@ from Code.models.comp_models import rw_learn, imm_learn, gr_model, ga_model, ia_
 
 def rw_costfun(alpha, game):
     model_predictions = pd.Series(rw_learn(game, alpha))
-    observations = game['pred']
+    observations = game['pred'].reset_index(drop=True)
     residuals = model_predictions - observations
-    return residuals.tolist()
+    return residuals.astype('float')
 
 
 def imm_costfun(params, game, folk_thry):
     alpha = params[0]
     tau = params[1]
     model_predictions = pd.Series(imm_learn(game, folk_thry, alpha, tau))
-    observations = game['pred']
+    observations = game['pred'].reset_index(drop=True)
     residuals = model_predictions - observations
-    return residuals.tolist()
+    return residuals.astype('float')
 
 
 def gr_costfun(game):

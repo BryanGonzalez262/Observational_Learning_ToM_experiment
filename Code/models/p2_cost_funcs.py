@@ -18,9 +18,9 @@ def imm_costfun(params, game, folk_thry):
     alpha = params[0]
     tau = params[1]
     model_predictions = pd.Series(comp_models.imm_learn(game, folk_thry, alpha, tau))
-    observations = game['ret']
+    observations = game['ret'].reset_index(drop=True)
     residuals = model_predictions - observations
-    return residuals.tolist()
+    return residuals.astype('float')
 
 
 def gr_costfun(game):
