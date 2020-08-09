@@ -16,7 +16,7 @@ def compute_aic(n_obs, sse, n_par):
     return aic
 
 
-def old_soft_max(x, tau):
+def soft_max(x, tau):
     """Compute softmax values for each sets of scores in x."""
     e_x = np.exp(np.array(x) / tau)
     return e_x / e_x.sum(axis=0)
@@ -36,7 +36,7 @@ def old_softmax(x, temperature):
     return probas[0]
 
 
-def softmax(X, tau = 1.0, axis = None):
+def softmax2(X, tau = 1.0, axis = None):
     """
     Compute the softmax of each element along an axis of X.
 

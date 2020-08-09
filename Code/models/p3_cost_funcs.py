@@ -23,7 +23,7 @@ def imm_costfun(params, game, folk_thry):
 def gr_costfun(game):
     model_predictions = pd.Series([gr_model(game['inv'][trl], game['mult'][trl], theta=0, phi=0)
                                    for trl in np.arange(len(game))])
-    observations = game['pred']
+    observations = game['pred'].reset_index(drop=True)
     residuals = model_predictions - observations
     return residuals.tolist()
 
@@ -31,7 +31,7 @@ def gr_costfun(game):
 def ga_costfun(theta, game):
     model_predictions = pd.Series([ga_model(game['inv'][trl], game['mult'][trl], theta=theta, phi=0)
                                    for trl in np.arange(len(game))])
-    observations = game['pred']
+    observations = game['pred'].reset_index(drop=True)
     residuals = model_predictions - observations
     return residuals.tolist()
 
@@ -39,7 +39,7 @@ def ga_costfun(theta, game):
 def ia_costfun(theta, game):
     model_predictions = pd.Series([ia_model(game['inv'][trl], game['mult'][trl], theta=theta, phi=0)
                                    for trl in np.arange(len(game))])
-    observations = game['pred']
+    observations = game['pred'].reset_index(drop=True)
     residuals = model_predictions - observations
     return residuals.tolist()
 
@@ -49,7 +49,7 @@ def mp_costfun(param, game):
     phee = param[1]
     model_predictions = pd.Series([mp_model_ppsoe(game['inv'][trl], game['mult'][trl], theta=thayta, phi=phee)
                                    for trl in np.arange(len(game))])
-    observations = game['pred']
+    observations = game['pred'].reset_index(drop=True)
     residuals = model_predictions - observations
     return residuals.tolist()
 

@@ -60,17 +60,17 @@ def imm_learn(game, folk_thry, alpha, tau):
             pred_err[t, i] = abs(game.ret.iloc[t] - predicted_bx[t, i])
             p_strat[t + 1, i] = p_strat[t, i] + alpha * ((1 - (pred_err[t, i] / (game.im.iloc[t]))) - p_strat[t, i])
 
-        future_probs[t + 1, :] = utils.softmax(p_strat[t + 1, :], tau)  # adjusted probabilities of p1 using each strategy
+        future_probs[t + 1, :] = utils.soft_max(p_strat[t + 1, :], tau)  # adjusted probabilities of p1 using each strategy
         pred_type[t + 1] = np.random.choice(strat_type, p=future_probs[t + 1, :])  # make probabilistic inference
 
-        if pred_type[t+1] == 'gr':
-            mb_pred_bx[t+1] = predicted_bx[t, 0]
-        if pred_type[t+1] == 'ga':
-            mb_pred_bx[t+1] = predicted_bx[t, 1]
-        if pred_type[t+1] == 'ia':
-            mb_pred_bx[t+1] = predicted_bx[t, 2]
-        if pred_type[t+1] == 'mo':
-            mb_pred_bx[t+1] = predicted_bx[t, 3]
+        if pred_type[t] == 'gr':
+            mb_pred_bx[t] = predicted_bx[t, 0]
+        if pred_type[t] == 'ga':
+            mb_pred_bx[t] = predicted_bx[t, 1]
+        if pred_type[t] == 'ia':
+            mb_pred_bx[t] = predicted_bx[t, 2]
+        if pred_type[t] == 'mo':
+            mb_pred_bx[t] = predicted_bx[t, 3]
 
     return mb_pred_bx[:57]
 
