@@ -60,7 +60,7 @@ def imm_learn(game, folk_thry, alpha, tau):
             pred_err[t, i] = abs(game.ret.iloc[t] - predicted_bx[t, i])
             p_strat[t + 1, i] = p_strat[t, i] + alpha * ((1 - (pred_err[t, i] / (game.im.iloc[t]))) - p_strat[t, i])
 
-        future_probs[t + 1, :] = utils.soft_max(p_strat[t + 1, :], tau)  # adjusted probabilities of p1 using each strategy
+        future_probs[t + 1, :] = utils.soft_max(p_strat[t + 1, :], tau)  # adjusted probabilities of p2 using each strategy
         pred_type[t + 1] = np.random.choice(strat_type, p=future_probs[t + 1, :])  # make probabilistic inference
 
         if pred_type[t] == 'gr':
@@ -146,3 +146,4 @@ def mp_model_ppsoe(inv, mult, theta, phi):
     utility = theta*own_share - (1-theta)*np.minimum(guilt+phi, inequity-phi)
 
     return choice_opts[np.where(utility == np.max(utility))[0][0]]
+

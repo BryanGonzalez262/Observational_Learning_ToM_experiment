@@ -46,3 +46,12 @@ pea = chi2.sf(LR, 1)
 m2 = Lmer('turker_pe ~ cntr_trial + trl_quadratic + cntr_trial*p2_strat + trl_quadratic*p2_strat + (1|turker_id)', data=dat)
 m2.fit(factors={'p2_strat': ['GR','GA', 'IA', 'MO']})
 m2anva = m2.anova()
+#%%
+#%% Reformatting data
+qDat = pd.read_csv('Data/questiondata_exp2.csv', header=None, index_col=None)
+qDat.rename(columns={0:'turker', 1:'question', 2:'answer'}, inplace=True)
+qDat = qDat.loc[qDat.turker.isin(dat.turker.unique())].reset_index(drop=True)
+qq = qDat.pivot(index='turker', columns='question', values='answer')
+qq.index = qq.index.set_names(['turker'])
+qq = qq.reset_index()
+qq.to_csv('Data/selfReport_data_exp2.csv',sep = ',', header=True)
